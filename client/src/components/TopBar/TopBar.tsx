@@ -16,9 +16,8 @@ export const TopBar = () => {
     >
       <IconButton
         onClick={() => dispatch(toggleDrawer())}
-        colorScheme="blue"
-        aria-label="Search database"
-        variant="outline"
+        colorScheme="gray"
+        aria-label="Open drawer"
         icon={<HamburgerIcon />}
       />
       YOUR DOCUMENTS

@@ -10,6 +10,8 @@ import {
 import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { toggleDrawer, select } from "../App/App.slice";
 
+import { ColorSwitcher } from "../ColorSwitcher/ColorSwitcher";
+
 export const CustomDrawer = () => {
   const isOpen = useAppSelector(select.isDrawerOpen);
   const dispatch = useAppDispatch();
@@ -24,7 +26,9 @@ export const CustomDrawer = () => {
         <DrawerCloseButton />
         <DrawerHeader>Drawer Content</DrawerHeader>
         <DrawerBody></DrawerBody>
-        <DrawerFooter></DrawerFooter>
+        <DrawerFooter>
+          <ColorSwitcher />
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );
