@@ -9,9 +9,6 @@ export const DashboardPage = () => {
       <TopBar />
       <CustomDrawer />
       <MainPanel />
-      <Link to="/login">Login</Link>
-      <br />
-      <Link to="/register">Register</Link>
     </>
   );
 };
