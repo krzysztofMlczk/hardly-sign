@@ -38,7 +38,7 @@ ALLOWED_HOSTS = os.environ.get(
 CORS_ALLOWED_ORIGINS = os.environ.get(
     "CORS_ALLOWED_HOSTS", default="http://localhost:3030"
 ).split(" ")
-
+CORS_ORIGIN_ALLOW_ALL = True
 # Application definition
 
 INSTALLED_APPS = [

@@ -3,7 +3,11 @@ import axios from "axios";
 import type { User } from "../types/user";
 
 // TODO: mocked for now
-axios.defaults.baseURL = "https://dummyapi.io/data/v1/";
+axios.defaults.baseURL = "http://localhost:8000/api/v1";
+// axios.defaults.headers.post["Access-Control-Allow-Headers"] = "*";
+// axios.defaults.headers.post["Access-Control-Allow-Origin"] =
+// "http://localhost:8000";
+// axios.defaults.headers.post["Accept"] = "*/*";
 // axios.defaults.headers.Authorization = `Token ${token}`;
 
 /**
@@ -24,17 +28,21 @@ export async function getUserViaToken(): Promise<User> {
 }
 
 /**
- * TODO: mocked for now
  * Requests authorization code to be sent to the user's email/SMS
  */
-export async function requestAuthCode(): Promise<boolean> {
-  // CHECK IF SERVER RESPONSE IS OK (200)
-  // THEN IT MEANS THAT AUTH CODE HAS BEEN SUCCESSFULLY SENT TO USER EMAIL/SMS
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, 1500);
-  });
+export async function requestAuthCode(credentials: {
+  email: string;
+  password: string;
+}): Promise<{ access: string; refresh: string }> {
+  // TODO: error handling xD
+  const response = await axios.post("/accounts/token/", credentials);
+  // await axios.get("/accounts/totp/create", {
+  //   headers: {
+  //     authorization: `Bearer ${response.data.access}`,
+  //   },
+  // });
+  const data = response.data;
+  return data;
 }
 
 /**
@@ -42,13 +50,9 @@ export async function requestAuthCode(): Promise<boolean> {
  * Checks auth code correctness
  */
 // Alternatively: export async function checkAuthCodeCorrectness(): Promise<boolean> {}
-export async function validateAuthCode(): Promise<User> {
-  // CHECK IF SERVER RESPONSE IS OK (200)
-  // THEN IT MEANS THAT AUTH CODE WAS CORRECT
-  // SERVER SHOULD RETURN HERE A USER + JWT
-  // JWT HAS TO BE SAVED IN localStorage
-  // TODO: make separate file with localStorage related functions
-  localStorage.setItem("token", "1234.5678.91011");
+export async function validateAuthCode(token: string): Promise<User> {
+  const response = await axios.post("/accounts/totp/login", { token });
+
   return new Promise((resolve) => {
     setTimeout(() => {
       const dummy: User = {
