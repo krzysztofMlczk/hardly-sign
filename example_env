@@ -3,6 +3,7 @@ SIGNING_KEY=''
 VERIFY_KEY=''
 DEBUG=1
 DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] 0.0.0.0
+CORS_ALLOWED_HOSTS=http://localhost:8000 http://localhost:3000
 
 SQL_ENGINE=django.db.backends.postgresql
 SQL_HOST=db
