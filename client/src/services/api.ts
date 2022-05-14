@@ -36,11 +36,11 @@ export async function requestAuthCode(credentials: {
 }): Promise<{ access: string; refresh: string }> {
   // TODO: error handling xD
   const response = await axios.post("/accounts/token/", credentials);
-  // await axios.get("/accounts/totp/create", {
-  //   headers: {
-  //     authorization: `Bearer ${response.data.access}`,
-  //   },
-  // });
+  await axios.get("/accounts/totp/create/", {
+    headers: {
+      authorization: `Bearer ${response.data.access}`,
+    },
+  });
   const data = response.data;
   return data;
 }
