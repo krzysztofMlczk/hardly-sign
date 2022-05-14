@@ -28,7 +28,7 @@ urlpatterns = [
         name='totp-create'
     ),
     re_path(
-        r'^totp/login/(?P<token>[0-9]{6})/$', 
+        r'^totp/login/', 
         views.TOTPVerifyView.as_view(), 
         name='totp-login'
     ),

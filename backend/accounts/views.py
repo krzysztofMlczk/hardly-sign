@@ -25,7 +25,7 @@ class UserView(views.APIView):
     def get(self, request, format=None):
         user = request.user
 
-        return Response(user.username, status=status.HTTP_200_OK)
+        return Response(user.email, status=status.HTTP_200_OK)
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -45,7 +45,10 @@ class TOTPCreateView(views.APIView):
 
         # TODO fake sms
         key = TOTP(key=device.bin_key, step=device.step, t0=device.t0, digits=device.digits, drift=device.drift).token()
-        return Response(key, status=status.HTTP_201_CREATED)
+
+        print(f"\033[93mFAKE SMS CODE: \033[4m{key}")
+
+        return Response(status=status.HTTP_201_CREATED)
 
 
 class TOTPVerifyView(views.APIView):
@@ -54,9 +57,10 @@ class TOTPVerifyView(views.APIView):
     """
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request, token, format=None):
+    def post(self, request, format=None):
         user = request.user
         device = get_user_totp_device(self, user)
+        token = request.data['token']
 
         if device is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -1,4 +1,6 @@
 SECRET_KEY='supersecretkey:-0'
+SIGNING_KEY=''
+VERIFY_KEY=''
 DEBUG=1
 DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] 0.0.0.0
 
