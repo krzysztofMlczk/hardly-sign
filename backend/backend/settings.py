@@ -35,6 +35,9 @@ ALLOWED_HOSTS = os.environ.get(
     "DJANGO_ALLOWED_HOSTS", default="localhost 0.0.0.0"
 ).split(" ")
 
+CORS_ALLOWED_ORIGINS = os.environ.get(
+    "CORS_ALLOWED_HOSTS", default="http://localhost:8000"
+).split(" ")
 
 # Application definition
 
@@ -50,7 +53,8 @@ INSTALLED_APPS = [
     "django_otp",
     "django_otp.plugins.otp_static",
     "django_otp.plugins.otp_totp",
-    "phonenumber_field"
+    "phonenumber_field",
+    'corsheaders'
 ]
 
 REST_FRAMEWORK = {
@@ -74,6 +78,8 @@ MIDDLEWARE = [
     "django_otp.middleware.OTPMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = "backend.urls"
