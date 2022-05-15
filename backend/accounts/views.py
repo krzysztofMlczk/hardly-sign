@@ -11,6 +11,7 @@ from django_otp import verify_token
 from django_otp.plugins.otp_totp.models import TOTPDevice
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
+from accounts.serializers import UserSerializer
 
 
 def get_user_totp_device(self, user, confirmed=None):
@@ -25,7 +26,7 @@ class UserView(views.APIView):
     def get(self, request, format=None):
         user = request.user
 
-        return Response(user.email, status=status.HTTP_200_OK)
+        return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
 
 
 class MyTokenObtainPairView(TokenObtainPairView):

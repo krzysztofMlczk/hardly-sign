@@ -6,29 +6,29 @@ from . import views
 app_name = "accounts"
 
 urlpatterns = [
-    path(
-        "token/",
+    re_path(
+        "^token/?$",
         # jwt_views.TokenObtainPairView.as_view(),
         views.MyTokenObtainPairView.as_view(),
         name="accounts_jwt",
     ),
-    path(
-        "token/refresh/",
+    re_path(
+        "^token/refresh/?$",
         jwt_views.TokenRefreshView.as_view(),
         name="accounts_jwt_refresh",
     ),
-    path(
-        "me/", 
+    re_path(
+        "^me/?$", 
         views.UserView.as_view(), 
         name="me"
     ),
     re_path(
-        r'^totp/create/$', 
+        r'^totp/create/?$', 
         views.TOTPCreateView.as_view(), 
         name='totp-create'
     ),
     re_path(
-        r'^totp/login/', 
+        r'^totp/login/?$', 
         views.TOTPVerifyView.as_view(), 
         name='totp-login'
     ),
