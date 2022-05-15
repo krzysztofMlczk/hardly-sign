@@ -15,11 +15,7 @@ class DocumentsConfig(AppConfig):
         global minio_service
         minio_service = MinioService(
             os.environ["MINIO_ENDPOINT"],
-<<<<<<< Updated upstream
-            "test-bucket", # TODO get form env
-=======
             os.environ["MINIO_BUCKET"],
->>>>>>> Stashed changes
             os.environ["MINIO_ACCESS_KEY"],
             os.environ["MINIO_SECRET_KEY"],
         )
