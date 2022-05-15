@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import type { User } from "../types/user";
-
 // TODO: mocked for now
 axios.defaults.baseURL = "http://localhost:8000/api/v1";
 // axios.defaults.headers.post["Access-Control-Allow-Headers"] = "*";
@@ -14,17 +12,16 @@ axios.defaults.baseURL = "http://localhost:8000/api/v1";
  * TODO: mocked for now
  * Requests user data from backend (based on auth token)
  */
-export async function getUserViaToken(): Promise<User> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const dummy: User = {
-        email: "example_name@email.com",
-        username: "ExampleName",
-        token: "1234.5678.91011",
-      };
-      resolve(dummy);
-    }, 1500);
-  });
+type UserViaTokenResponse = {
+  id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+};
+export async function getUserViaToken(): Promise<UserViaTokenResponse> {
+  const result = await axios.get("/accounts/me/");
+  return result.data;
 }
 
 /**
@@ -35,32 +32,28 @@ export async function requestAuthCode(credentials: {
   password: string;
 }): Promise<{ access: string; refresh: string }> {
   // TODO: error handling xD
+  // Validate credentials (email + password)
   const response = await axios.post("/accounts/token/", credentials);
+  // Request auth code using received access token
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${response.data.access}`;
   await axios.get("/accounts/totp/create/", {
-    headers: {
-      authorization: `Bearer ${response.data.access}`,
-    },
+    // headers: {
+    //   authorization: `Bearer ${response.data.access}`,
+    // },
   });
   const data = response.data;
   return data;
 }
 
-/**
- * TODO: mocked for now
- * Checks auth code correctness
- */
 // Alternatively: export async function checkAuthCodeCorrectness(): Promise<boolean> {}
-export async function validateAuthCode(token: string): Promise<User> {
-  const response = await axios.post("/accounts/totp/login", { token });
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const dummy: User = {
-        email: "example_name@email.com",
-        username: "ExampleName",
-        token: "1234.5678.91011",
-      };
-      resolve(dummy);
-    }, 1500);
-  });
+export async function validateAuthCode(
+  token: string
+): Promise<{ access: string; refresh: string }> {
+  const response = await axios.post("/accounts/totp/login/", { token });
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${response.data.access}`;
+  return response.data;
 }

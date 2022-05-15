@@ -1,0 +1,79 @@
+ .dzu-dropzone  {
+    max-width: 90% !important;
+    overflow: hidden !important;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center calc(150px);
+    background-size: 200px auto;
+    border: none !important;
+}
+
+
+.dzu-inputLabelWithFiles {
+    margin: 0 0  !important;
+    margin-top: 20px !important;
+    padding:  10px 0;
+    width: 100%;
+    line-height: 25px;
+    font-size: 16px;
+
+}
+.dzu-submitButtonContainer{
+    margin-top: 1rem !important;
+    width: 100%;
+    margin: 0 0;
+    padding: 0 0;
+}
+.dzu-submitButton{
+    margin: 0 0;
+    padding: 10px 0;
+    width: 100%;
+    line-height: 25px;
+    font-size: 16px;
+}
+
+.dzu-previewContainer{
+    border: 1px solid #ECECEC;
+    padding: 20px 10px;
+}
+.dzu-previewImage{
+    max-height: 100px;
+}
+.customIcon{
+    
+    margin: 0 auto;
+}
+.customIcon:hover{
+    transform: scale(1.05);
+}
+
+.approve-icon{
+    width: 130px;
+    height: auto;
+    margin: 1rem 0;
+    margin: 0 auto;
+}
+
+.success-section{
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1.2rem;
+    font-size: 18px;
+    width: 90%;
+    margin: 0 auto;
+}
+.loader-section{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (min-width: 48em) {
+    .success-section{
+        width: 60%;
+       
+    }
+}
+

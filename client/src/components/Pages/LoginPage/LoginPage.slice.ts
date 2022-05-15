@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { requestAuthCode, validateAuthCode } from "../../../services/api";
 import { store, RootState } from "../../../state/store";
-import { setUser } from "../../App/App.slice";
-import { LoginPage } from "./LoginPage";
+import { setUserByToken } from "../../App/App.slice";
+import { toast } from "react-toastify";
 
 export interface LoginPageState {
   authCodeToken: string | null;
@@ -25,16 +25,14 @@ export const requestAuthorizationCode = createAsyncThunk(
 
 export const validateAuthorizationCode = createAsyncThunk(
   "loginPage/validateAuthCode",
-  async () => {
-    // try {
-    const token = store.getState().loginPage.authCodeToken as string;
-    // TODO: validateAuthCode should return user object with image
-    return await validateAuthCode(token);
-    // const user = await validateAuthCode(LoginPage);
-    // store.dispatch(setUser(user));
-    // } catch (err) {
-    //   console.log(err);
-    // }
+  async (code: string) => {
+    const result = await validateAuthCode(code);
+    const tokens = {
+      token: result.access,
+      refreshToken: result.refresh,
+    };
+    store.dispatch(setUserByToken(tokens));
+    return result;
   }
 );
 
@@ -52,6 +50,7 @@ export const LoginPageSlice = createSlice({
         state.isSubmitting = true;
       })
       .addCase(requestAuthorizationCode.fulfilled, (state, action) => {
+        toast.info("Provide code from SMS");
         // Save first token
         state.authCodeToken = action.payload.access;
         state.isSubmitting = false;
@@ -59,17 +58,21 @@ export const LoginPageSlice = createSlice({
       })
       .addCase(requestAuthorizationCode.rejected, (state) => {
         // TODO: code for error case
+        toast.error("Invalid credentials");
         state.isSubmitting = false;
       })
       .addCase(validateAuthorizationCode.pending, (state) => {
         state.isSubmitting = true;
       })
       .addCase(validateAuthorizationCode.fulfilled, (state) => {
+        toast.success("Successfully verified");
         state.isSubmitting = false;
         state.step = "email"; // reset the form so the email field shows as first when we logout
       })
       .addCase(validateAuthorizationCode.rejected, (state) => {
         // TODO: code for wrong auth code case
+        toast.error("Invalid authorization code");
+        state.step = "email";
         state.isSubmitting = false;
       });
   },

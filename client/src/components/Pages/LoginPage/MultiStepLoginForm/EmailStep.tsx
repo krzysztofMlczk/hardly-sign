@@ -5,18 +5,23 @@ import {
   Button,
   VStack,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../../../state/hooks";
 import { requestAuthorizationCode, select } from "../LoginPage.slice";
 
 import { Formik, Form, useField, FieldHookConfig } from "formik";
+import { Link } from "react-router-dom";
 
 export const EmailStep = () => {
   const isSubmitting = useAppSelector(select.isSubmitting);
   return (
     <VStack spacing={4}>
       <EmailForm isSubmitting={isSubmitting} />
+      <Link to="/about">
+        <Button colorScheme="teal" variant="outline" size="sm">
+          About Us
+        </Button>
+      </Link>
     </VStack>
   );
 };

@@ -38,12 +38,14 @@ export const PinForm = ({ isSubmitting }: { isSubmitting: boolean }) => {
 
   const onComplete = (value: string) => {
     console.log(value);
-    dispatch(validateAuthorizationCode());
+    dispatch(validateAuthorizationCode(value));
   };
   return (
     <HStack>
       {/* otp - One Time Password */}
       <PinInput otp mask isDisabled={isSubmitting} onComplete={onComplete}>
+        <PinInputField />
+        <PinInputField />
         <PinInputField />
         <PinInputField />
         <PinInputField />

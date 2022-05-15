@@ -28,13 +28,13 @@ import { ProfileInfo } from "./ProfileInfo";
 import { ColorSwitcher } from "../ColorSwitcher/ColorSwitcher";
 import { User } from "../../types/user";
 
-type DrawerOption = {
+type DrawerOptionType = {
   label: string;
   destinationRoute: string; // TODO: make separate type/enum for accessible routes in the application
   icon: JSX.Element;
 };
 
-const drawerOptions: DrawerOption[] = [
+const drawerOptions: DrawerOptionType[] = [
   {
     label: "certificates",
     destinationRoute: "/certificates",
@@ -51,8 +51,8 @@ const drawerOptions: DrawerOption[] = [
     icon: <LinkIcon />,
   },
   {
-    label: "visualization",
-    destinationRoute: "/visualization",
+    label: "About",
+    destinationRoute: "/about",
     icon: <ViewIcon />,
   },
 ];
@@ -69,7 +69,7 @@ export const CustomDrawer = () => {
   const onLogout = () => {
     closeDrawer();
     dispatch(logout());
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
   };
 
   return (
@@ -84,6 +84,7 @@ export const CustomDrawer = () => {
           <VStack divider={<StackDivider />} spacing={0} align="left">
             {drawerOptions.map(({ label, destinationRoute, icon }) => (
               <DrawerOption
+                key={label}
                 label={label}
                 destinationRoute={destinationRoute}
                 icon={icon}
@@ -114,7 +115,7 @@ const DrawerOption = ({
   destinationRoute,
   icon,
   onClick,
-}: DrawerOption & { onClick: () => void }) => {
+}: DrawerOptionType & { onClick: () => void }) => {
   return (
     <Link to={destinationRoute} onClick={onClick}>
       <Flex alignItems="center" py={2} gap={2}>

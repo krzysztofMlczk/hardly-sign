@@ -8,10 +8,10 @@ type Props = {
 export const ProfileInfo = ({ user }: Props) => {
   return (
     <Flex>
-      <Avatar src="https://bit.ly/sage-adebayo" />
+      <Avatar src={""} />
       <Box ml="3">
         <Text fontWeight="medium" fontSize="lg">
-          {user.username}
+          {`${user.firstName} ${user.lastName}`}
           <Badge ml="1" colorScheme="green">
             Auth
           </Badge>

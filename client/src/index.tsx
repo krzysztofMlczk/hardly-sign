@@ -7,7 +7,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./utils/chakra/theme";
 
 import * as serviceWorker from "./serviceWorker";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import App from "./components/App/App";
 
@@ -17,6 +18,7 @@ ReactDOM.render(
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <ChakraProvider theme={theme}>
         <App />
+        <ToastContainer theme="colored" />
       </ChakraProvider>
     </Provider>
   </>,

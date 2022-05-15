@@ -1,4 +1,5 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { Uploader } from "../Uploader/Uploader";
 
 export const MainPanel = () => {
   return (
@@ -10,7 +11,7 @@ export const MainPanel = () => {
 
       <TabPanels>
         <TabPanel>
-          <p>Signing Panel</p>
+          <Uploader />
         </TabPanel>
         <TabPanel>
           <p>Verification Panel</p>
