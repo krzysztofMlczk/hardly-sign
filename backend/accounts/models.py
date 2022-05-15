@@ -17,6 +17,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=False)
     phone_number = PhoneNumberField(null=True, blank=True)
     avatar = models.ImageField(null=True, blank=True, upload_to="images")
+
+    private_key = models.TextField(unique=True, blank=True, null=True)
+    public_key = models.TextField(unique=True, blank=True, null=True)
+    certificate = models.TextField(unique=True, blank=True, null=True)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

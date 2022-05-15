@@ -6,7 +6,7 @@ from .models import User
 
 
 class CustomUserAdmin(UserAdmin):
-    add_form =UserCreationForm
+    add_form = UserCreationForm
     form = UserChangeForm
     model = User
     list_display = (
@@ -23,7 +23,20 @@ class CustomUserAdmin(UserAdmin):
     )
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        ("Personal information", {"fields": ("first_name", "last_name", "phone_number", "avatar")}),
+        (
+            "Personal information",
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "phone_number",
+                    "avatar",
+                    "private_key",
+                    "public_key",
+                    "certificate",
+                )
+            },
+        ),
         ("Permissions", {"fields": ("is_staff", "is_active")}),
     )
     add_fieldsets = (
@@ -41,12 +54,21 @@ class CustomUserAdmin(UserAdmin):
                     "password2",
                     "is_staff",
                     "is_active",
+                    "private_key",
+                    "public_key",
+                    "certificate",
                 ),
             },
         ),
     )
-    search_fields = ("id","email",)
-    ordering = ("id","email",)
+    search_fields = (
+        "id",
+        "email",
+    )
+    ordering = (
+        "id",
+        "email",
+    )
 
 
 admin.site.register(User, CustomUserAdmin)

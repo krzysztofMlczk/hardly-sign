@@ -24,3 +24,4 @@ sqlparse==0.4.2
 tomli==1.2.3
 typing_extensions==4.0.1
 tzdata==2021.5
+PyPDF2==1.27.12
