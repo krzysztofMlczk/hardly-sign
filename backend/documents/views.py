@@ -11,7 +11,10 @@ from Crypto.Hash import SHA256
 from Crypto.Signature import PKCS1_v1_5
 from Crypto.PublicKey import RSA
 
+from PyPDF2 import PdfFileReader, PdfFileWriter
+
 import json
+import io
 
 
 class FileViewSet(viewsets.ModelViewSet):
@@ -22,8 +25,26 @@ class FileViewSet(viewsets.ModelViewSet):
     ]
 
     def create(self, request):
-        file_to_sign = request.FILES["file"].read()
-        signer = PKCS1_v1_5.new(RSA.importKey(settings.SIGNING_KEY))
-        signature = signer.sign(SHA256.new(file_to_sign))
+        file_to_sign = request.FILES["file"]
+        user = request.user
 
-        return HttpResponse(content=signature, content_type="text/plain")
+        # Create document signature with unique key for given user
+        signer = PKCS1_v1_5.new(RSA.importKey(user.private_key))
+        signature = signer.sign(SHA256.new(file_to_sign.read()))
+
+        # Add signature to PDF metadata and return signed file
+        file_to_sign.seek(0)
+        reader = PdfFileReader(file_to_sign)
+        writer = PdfFileWriter()
+
+        writer.appendPagesFromReader(reader)
+        metadata = reader.getDocumentInfo()
+        writer.addMetadata(metadata)
+
+        writer.addMetadata({"/Signature": signature})
+
+        signed_file = io.BytesIO()
+        writer.write(signed_file)
+        signed_file.seek(0)
+
+        return HttpResponse(content=signed_file, content_type="text/pdf")
