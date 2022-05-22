@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
 
+from documents.models import File
+
 from .managers import UserManager
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -16,7 +18,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     phone_number = PhoneNumberField(null=True, blank=True)
-    avatar = models.ImageField(null=True, blank=True, upload_to="images")
+    avatar = models.OneToOneField(File, null=True, blank=True, on_delete=models.CASCADE, related_name="user")
 
     private_key = models.TextField(unique=True, blank=True, null=True)
     public_key = models.TextField(unique=True, blank=True, null=True)

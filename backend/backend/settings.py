@@ -46,12 +46,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "accounts",
+    "documents",
     "rest_framework",
     "django_otp",
     "django_otp.plugins.otp_static",
     "django_otp.plugins.otp_totp",
     "phonenumber_field",
-    'corsheaders'
+    "corsheaders",
+    "django_minio_backend",  # https://github.com/theriverman/django-minio-backend
 ]
 
 REST_FRAMEWORK = {
@@ -151,3 +153,24 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
+
+
+MINIO_ENDPOINT = os.environ["MINIO_ENDPOINT"]
+MINIO_EXTERNAL_ENDPOINT = os.environ[
+    "MINIO_EXTERNAL_ENDPOINT"
+]  # Default is same as MINIO_ENDPOINT
+MINIO_EXTERNAL_ENDPOINT_USE_HTTPS = False  # Default is same as MINIO_USE_HTTPS
+MINIO_ACCESS_KEY = os.environ["MINIO_ACCESS_KEY"]
+MINIO_SECRET_KEY = os.environ["MINIO_SECRET_KEY"]
+MINIO_USE_HTTPS = False
+MINIO_URL_EXPIRY_HOURS = timedelta(days=1)  # Default is 7 days (longest) if not defined
+MINIO_PRIVATE_BUCKETS = ["private"]
+MINIO_PUBLIC_BUCKETS = [
+    os.environ["MINIO_BUCKET"],
+]
+MINIO_POLICY_HOOKS = []
+# MINIO_MEDIA_FILES_BUCKET = 'my-media-files-bucket'  # replacement for MEDIA_ROOT
+# MINIO_STATIC_FILES_BUCKET = 'my-static-files-bucket'  # replacement for STATIC_ROOT
+MINIO_BUCKET_CHECK_ON_SAVE = (
+    True  # Default: True // Creates bucket if missing, then save
+)
