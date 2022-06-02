@@ -1,4 +1,5 @@
 from rest_framework.routers import DefaultRouter
+from django.urls import path
 
 from . import views
 
@@ -8,4 +9,6 @@ router = DefaultRouter()
 router = DefaultRouter()
 router.register(r"documents", views.FileViewSet, basename="documents")
 
-urlpatterns = router.urls
+urlpatterns = [
+    path(r"documents/verify/", views.DocumentVerifyView.as_view(), name="documents-verify"),
+] + router.urls
