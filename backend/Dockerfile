@@ -18,4 +18,4 @@ RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
 
-CMD gunicorn backend.wsgi:application --bind 0.0.0.0:$PORT
+# CMD gunicorn backend.wsgi:application --bind 0.0.0.0:$PORT

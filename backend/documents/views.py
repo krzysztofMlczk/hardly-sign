@@ -152,4 +152,4 @@ class DocumentVerifyView(APIView):
         if signer.verify(file_hash, signature):
             return HttpResponse(content=b"Verified ok", status=200)
         else:
-            return HttpResponse(content=b"Signature not verified", status_code=400)
+            return HttpResponse(content=b"Signature not verified", status=400)
