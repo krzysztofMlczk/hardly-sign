@@ -97,9 +97,6 @@ class DocumentViewSet(viewsets.ModelViewSet):
         writer.write(signed_file)
         signed_file.seek(0)
 
-<<<<<<< HEAD
-        return HttpResponse(content=signed_file, content_type="text/pdf")
-=======
         file = bytes_to_file(signed_file, file_name)
         serializer = DocumentSerializer(data={"file": {"file": file}}, context={"user": user}) # XD 
 
@@ -120,7 +117,6 @@ class DocumentViewSet(viewsets.ModelViewSet):
 
         return FileResponse(
             document.file.file.open(), as_attachment=True, filename=document.name, content_type="text/pdf")
->>>>>>> main
 
 
 class DocumentVerifyView(APIView):
