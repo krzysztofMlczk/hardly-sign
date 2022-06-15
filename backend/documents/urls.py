@@ -7,7 +7,7 @@ app_name = "accounts"
 router = DefaultRouter()
 
 router = DefaultRouter()
-router.register(r"documents", views.FileViewSet, basename="documents")
+router.register(r"documents", views.DocumentViewSet, basename="documents")
 
 urlpatterns = [
     path(r"documents/verify/", views.DocumentVerifyView.as_view(), name="documents-verify"),

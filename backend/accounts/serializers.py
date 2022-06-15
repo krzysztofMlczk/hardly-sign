@@ -27,11 +27,11 @@ class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField(read_only=True)
 
     def get_avatar(self, obj):
-        object_name = obj.avatar.file_name
         try:
+            object_name = obj.avatar.file_name
             response = minio.get_external_url(object_name)
-        except FileNotFoundInStorage:
-            return ""
+        except (FileNotFoundInStorage, AttributeError):
+            return None
         return response
 
     class Meta:
