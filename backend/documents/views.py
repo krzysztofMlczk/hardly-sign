@@ -51,6 +51,19 @@ class DocumentViewSet(viewsets.ModelViewSet):
         writer.write(file_to_sign)
         file_to_sign.seek(0)
 
+        file_to_sign.seek(0)
+        reader = PdfFileReader(file_to_sign)
+        writer = PdfFileWriter()
+
+        writer.appendPagesFromReader(reader)
+        metadata = reader.getDocumentInfo()
+        writer.addMetadata(metadata)
+        writer.addMetadata({"/Signature": ""})
+        writer.addMetadata({"/NeedAppearances": ""})
+        file_to_sign = io.BytesIO()
+        writer.write(file_to_sign)
+        file_to_sign.seek(0)
+
         # Create document signature with unique key for given user
         signer = PKCS1_v1_5.new(RSA.importKey(user.private_key))
         signature = signer.sign(SHA256.new(file_to_sign.read()))
