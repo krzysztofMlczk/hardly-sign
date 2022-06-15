@@ -7,7 +7,7 @@ from django.db.models.fields.files import FileField
 from django.db.models.manager import Manager
 from django_minio_backend import MinioBackend
 
-# class Document(models.Model)
+from accounts.models import User
 
 
 def hash_file(file, block_size=65536):
@@ -54,3 +54,14 @@ class File(models.Model):
         # noinspection PyUnresolvedReferences
         self.file.delete()
         super(File, self).delete(*args, **kwargs)
+
+
+class Document(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, editable=False, related_name="documents"
+    )
+    file = models.ForeignKey(File, on_delete=models.PROTECT, related_name="documents")
+    name = models.CharField(max_length=100)
+    uploaded = models.DateTimeField(auto_now=True)
+
+    objects = Manager()
