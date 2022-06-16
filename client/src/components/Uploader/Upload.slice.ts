@@ -24,7 +24,7 @@ export const signFiles = createAsyncThunk(
 
 export const verifyFiles = createAsyncThunk(
   "upload/verifyFiles",
-  async (data: { formData: FormData; ownerValue: string }) => {
+  async (data: FormData) => {
     const res = await verifyFilesApi(data);
     return res;
   }

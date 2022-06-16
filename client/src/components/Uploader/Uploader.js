@@ -16,12 +16,17 @@ export const Uploader = ({ variant }) => {
 
   const handleSubmit = async (files, allFiles) => {
     if (files.length) {
-      const formData = new FormData("file", files);
+      const formData = new FormData();
+      formData.append("file", files[0].file, "file");
+      console.log(formData.getAll);
       switch (variant) {
         case "sign":
           dispatch(signFiles(formData));
+          return;
         case "verify":
-          dispatch(verifyFiles({ formData, ownerValue }));
+          formData.append("user_email", ownerValue, "user_email");
+          dispatch(verifyFiles(formData));
+          return;
       }
     }
   };

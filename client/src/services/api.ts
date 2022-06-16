@@ -59,20 +59,16 @@ export async function validateAuthCode(
 }
 
 export async function signFilesApi(formData: FormData) {
-  const response = await axios.post("/documents", { file: formData });
+  const response = await axios.post("/documents/", { file: formData });
   return response.data;
 }
 
-export async function verifyFilesApi({
-  formData,
-  ownerValue,
-}: {
-  formData: FormData;
-  ownerValue: string;
-}) {
-  const response = await axios.post("/documents/verify", {
-    file: formData,
-    user_email: ownerValue,
+export async function verifyFilesApi(data: FormData) {
+  const response = await axios({
+    method: "POST",
+    url: "/documents/verify/",
+    data: data,
+    headers: { "Content-Type": "multipart/form-data" },
   });
   return response.data;
 }
