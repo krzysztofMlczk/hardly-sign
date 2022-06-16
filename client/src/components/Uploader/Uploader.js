@@ -7,34 +7,23 @@ import { Spinner, Button } from "@chakra-ui/react";
 import approveImage from "../../assets/img/approve.svg";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useAppDispatch, useAppSelector } from "../../state/hooks";
+import { signFiles, verifyFiles, select } from "./Upload.slice";
 
-export const Uploader = (props) => {
-  const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
+export const Uploader = ({ variant }) => {
+  const ownerValue = useAppSelector(select.ownerValue);
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (files, allFiles) => {
-    setLoading(true);
-
-    console.log(files.map((f) => f.meta));
-    files.map(async (el) => {
-      console.log("\n", {
-        file: el.file,
-        data: el.meta,
-        base: await getBase64(el.file),
-      });
-    });
-    allFiles.forEach((f) => f.remove());
-
-    setTimeout(() => {
-      setSuccess(true);
-      setLoading(false);
-    }, 1500);
+    if (files.length) {
+      const formData = new FormData("file", files);
+      switch (variant) {
+        case "sign":
+          dispatch(signFiles(formData));
+        case "verify":
+          dispatch(verifyFiles({ formData, ownerValue }));
+      }
+    }
   };
 
   const getUploadParams = ({ meta }) => {
@@ -62,7 +51,7 @@ export const Uploader = (props) => {
       duration: 2000,
     });
     AOS.refresh();
-  }, [props]);
+  }, []);
 
   return (
     <div>

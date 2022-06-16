@@ -1,4 +1,14 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  VStack,
+  Spacer,
+  Box,
+} from "@chakra-ui/react";
+import { OwnerInput } from "../OwnerInput/OwnerInput";
 import { Uploader } from "../Uploader/Uploader";
 
 export const MainPanel = () => {
@@ -11,10 +21,12 @@ export const MainPanel = () => {
 
       <TabPanels>
         <TabPanel>
-          <Uploader />
+          <Uploader variant="sign" />
         </TabPanel>
         <TabPanel>
-          <p>Verification Panel</p>
+          <OwnerInput />
+          <Box h="20px"></Box>
+          <Uploader variant="verify" />
         </TabPanel>
       </TabPanels>
     </Tabs>

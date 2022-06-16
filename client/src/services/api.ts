@@ -57,3 +57,22 @@ export async function validateAuthCode(
   ] = `Bearer ${response.data.access}`;
   return response.data;
 }
+
+export async function signFilesApi(formData: FormData) {
+  const response = await axios.post("/documents", { file: formData });
+  return response.data;
+}
+
+export async function verifyFilesApi({
+  formData,
+  ownerValue,
+}: {
+  formData: FormData;
+  ownerValue: string;
+}) {
+  const response = await axios.post("/documents/verify", {
+    file: formData,
+    user_email: ownerValue,
+  });
+  return response.data;
+}
