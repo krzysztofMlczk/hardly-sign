@@ -58,8 +58,13 @@ export async function validateAuthCode(
   return response.data;
 }
 
-export async function signFilesApi(formData: FormData) {
-  const response = await axios.post("/documents/", { file: formData });
+export async function signFilesApi(data: FormData) {
+  const response = await axios({
+    method: "POST",
+    url: "/documents/",
+    data: data,
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return response.data;
 }
 
