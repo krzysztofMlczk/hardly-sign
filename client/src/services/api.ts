@@ -100,7 +100,7 @@ export async function getFile(id: number) {
   const response = await axios({
     method: "GET",
     responseType: "arraybuffer",
-    url: `/documents/${id}/download`,
+    url: `/documents/${id}/download/`,
   });
 
   const blob = new Blob([response.data], { type: "application/pdf" });

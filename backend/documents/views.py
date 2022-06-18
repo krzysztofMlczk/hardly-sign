@@ -104,7 +104,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
             file = serializer.save()
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
-        return FileResponse(signed_file, as_attachment=True, filename=file_name, content_type="text/pdf")
+        return FileResponse(signed_file, as_attachment=True, filename=file_name, content_type="application/pdf")
 
     @action(
         detail=True, methods=["get"]
@@ -116,7 +116,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
             return Response({"detail": "Cannot locate file."})
 
         return FileResponse(
-            document.file.file.open(), as_attachment=True, filename=document.name, content_type="text/pdf")
+            document.file.file.open(), as_attachment=True, filename=document.name, content_type="application/pdf")
 
 
 class DocumentVerifyView(APIView):
