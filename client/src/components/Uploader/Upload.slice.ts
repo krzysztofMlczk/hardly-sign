@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../state/store";
 import { signFilesApi, verifyFilesApi } from "../../services/api";
+import { toast } from "react-toastify";
 
 export interface UploadState {
   signedFiles: Array<any>;
@@ -26,6 +27,11 @@ export const verifyFiles = createAsyncThunk(
   "upload/verifyFiles",
   async (data: FormData) => {
     const res = await verifyFilesApi(data);
+    if (res) {
+      toast.success("Successfully verified!");
+    } else {
+      toast.error("Verification failed!");
+    }
     return res;
   }
 );
@@ -39,13 +45,15 @@ export const UploadSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(signFiles.fulfilled, (state, action) => {
-        state.signedFiles.push(action.payload);
-      })
-      .addCase(verifyFiles.fulfilled, (state, action) => {
-        state.verifiedFiles.push(action.payload);
-      });
+    builder.addCase(verifyFiles.fulfilled, (state, action) => {
+      state.ownerValue = "";
+    });
+    // .addCase(signFiles.fulfilled, (state, action) => {
+    //   state.signedFiles.push(action.payload);
+    // })
+    // .addCase(verifyFiles.fulfilled, (state, action) => {
+    //   state.verifiedFiles.push(action.payload);
+    // });
   },
 });
 

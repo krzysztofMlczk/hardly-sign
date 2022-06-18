@@ -68,12 +68,12 @@ export async function signFilesApi(data: FormData) {
   return response.data;
 }
 
-export async function verifyFilesApi(data: FormData) {
+export async function verifyFilesApi(data: FormData): Promise<boolean> {
   const response = await axios({
     method: "POST",
     url: "/documents/verify/",
     data: data,
     headers: { "Content-Type": "multipart/form-data" },
   });
-  return response.data;
+  return response.status === 200;
 }

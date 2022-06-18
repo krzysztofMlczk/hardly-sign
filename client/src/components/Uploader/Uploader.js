@@ -18,13 +18,12 @@ export const Uploader = ({ variant }) => {
     if (files.length) {
       const formData = new FormData();
       formData.append("file", files[0].file, "file");
-      console.log(formData.getAll);
       switch (variant) {
         case "sign":
           dispatch(signFiles(formData));
           return;
         case "verify":
-          formData.append("user_email", ownerValue, "user_email");
+          formData.append("user_email", ownerValue);
           dispatch(verifyFiles(formData));
           return;
       }
