@@ -26,13 +26,7 @@ export const signFiles = createAsyncThunk(
 export const verifyFiles = createAsyncThunk(
   "upload/verifyFiles",
   async (data: FormData) => {
-    const res = await verifyFilesApi(data);
-    if (res) {
-      toast.success("Successfully verified!");
-    } else {
-      toast.error("Verification failed!");
-    }
-    return res;
+    return await verifyFilesApi(data);
   }
 );
 
@@ -45,9 +39,15 @@ export const UploadSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(verifyFiles.fulfilled, (state, action) => {
-      state.ownerValue = "";
-    });
+    builder
+      .addCase(verifyFiles.fulfilled, (state, action) => {
+        state.ownerValue = "";
+        toast.success("Successfully verified!");
+      })
+      .addCase(verifyFiles.rejected, (state, action) => {
+        state.ownerValue = "";
+        toast.error("Verification failed!");
+      });
     // .addCase(signFiles.fulfilled, (state, action) => {
     //   state.signedFiles.push(action.payload);
     // })
