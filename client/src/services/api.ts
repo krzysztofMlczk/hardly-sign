@@ -61,10 +61,16 @@ export async function validateAuthCode(
 export async function signFilesApi(data: FormData) {
   const response = await axios({
     method: "POST",
+    responseType: "arraybuffer",
     url: "/documents/",
     data: data,
     headers: { "Content-Type": "multipart/form-data" },
   });
+
+  const blob = new Blob([response.data], { type: "application/pdf" });
+  const url = window.URL.createObjectURL(blob);
+  window.open(url);
+
   return response.data;
 }
 
