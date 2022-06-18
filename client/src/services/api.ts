@@ -83,3 +83,27 @@ export async function verifyFilesApi(data: FormData): Promise<boolean> {
   });
   return response.status === 200;
 }
+
+export interface IFile {
+  id: number;
+  name: string;
+  uploaded: string;
+  user: string;
+}
+
+export async function getFilesHistory(): Promise<Array<IFile>> {
+  const response = await axios.get("/documents/");
+  return response.data;
+}
+
+export async function getFile(id: number) {
+  const response = await axios({
+    method: "GET",
+    responseType: "arraybuffer",
+    url: `/documents/${id}/download`,
+  });
+
+  const blob = new Blob([response.data], { type: "application/pdf" });
+  const url = window.URL.createObjectURL(blob);
+  window.open(url);
+}

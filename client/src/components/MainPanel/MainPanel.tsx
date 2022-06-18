@@ -8,6 +8,7 @@ import {
   Spacer,
   Box,
 } from "@chakra-ui/react";
+import { FilesHistory } from "../FilesHistory/FilesHistory";
 import { OwnerInput } from "../OwnerInput/OwnerInput";
 import { Uploader } from "../Uploader/Uploader";
 
@@ -17,6 +18,7 @@ export const MainPanel = () => {
       <TabList>
         <Tab>Sign</Tab>
         <Tab>Verify</Tab>
+        <Tab>Files history</Tab>
       </TabList>
 
       <TabPanels>
@@ -27,6 +29,9 @@ export const MainPanel = () => {
           <OwnerInput />
           <Box h="20px"></Box>
           <Uploader variant="verify" />
+        </TabPanel>
+        <TabPanel>
+          <FilesHistory />
         </TabPanel>
       </TabPanels>
     </Tabs>
