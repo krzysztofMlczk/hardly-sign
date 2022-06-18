@@ -18,17 +18,18 @@ export const FilesHistory = () => {
 
   return (
     <VStack w="full">
-      {filesHistory.map(({ id, name }) => (
-        <Button
-          id={`${id}`}
-          w="full"
-          leftIcon={<CopyIcon />}
-          gap={5}
-          onClick={() => onFileSelected(id)}
-        >
-          {name}
-        </Button>
-      ))}
+      {filesHistory &&
+        filesHistory.map(({ id, name }) => (
+          <Button
+            id={`${id}`}
+            w="full"
+            leftIcon={<CopyIcon />}
+            gap={5}
+            onClick={() => onFileSelected(id)}
+          >
+            {name}
+          </Button>
+        ))}
     </VStack>
   );
 };
