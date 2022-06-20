@@ -17,7 +17,7 @@ export const Uploader = ({ variant }) => {
   const handleSubmit = async (files, allFiles) => {
     if (files.length) {
       const formData = new FormData();
-      formData.append("file", files[0].file, "file");
+      formData.append("file", files[0].file, files[0].meta.name);
       switch (variant) {
         case "sign":
           dispatch(signFiles(formData));
